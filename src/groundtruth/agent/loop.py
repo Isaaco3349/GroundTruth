@@ -6,7 +6,7 @@ import time
 from typing import Any
 
 from groundtruth.agent.planner import plan_patch
-from groundtruth.config import get_settings, prepare_workspace
+from groundtruth.config import get_settings, is_vercel, prepare_workspace
 from groundtruth.memory.store import remember_run
 from groundtruth.models import EvidencePack, ModelTier, RunRecord, RunStatus
 from groundtruth.nemotron.client import NemotronClient
@@ -101,8 +101,14 @@ def run_task(task: str, run_id: str) -> RunRecord:
         run_store.save(record)
         return record
 
-    code, test_output = ws.run_pytest(workspace)
-    _log(record, "Pytest finished", exit_code=code, output=test_output[-4000:])
+    code, test_output = ws.run_tests(workspace, prefer_pytest=not is_vercel())
+    _log(
+        record,
+        "Verification finished",
+        exit_code=code,
+        mode="inline" if is_vercel() else "pytest",
+        output=test_output[-4000:],
+    )
 
     if code == 0:
         record.status = RunStatus.completed

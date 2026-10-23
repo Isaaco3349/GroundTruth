@@ -52,6 +52,37 @@ def run_pytest(workspace: Path) -> tuple[int, str]:
     return code, combined
 
 
+def verify_sample_greet(workspace: Path) -> tuple[int, str]:
+    """Run the sample greet assertion without pytest (for lean serverless runtimes)."""
+    expected = infer_expected_from_tests(workspace)
+    if not expected:
+        return 1, "Could not read expected greet() value from tests."
+
+    script = (
+        "import sys\n"
+        f"sys.path.insert(0, {str(workspace)!r})\n"
+        "from sampledemo import greet\n"
+        f"expected = {expected!r}\n"
+        "actual = greet('builder')\n"
+        "assert actual == expected, f'got {{actual!r}} expected {{expected!r}}'\n"
+        "print('sample verification passed')\n"
+    )
+    code, out, err = run_command(workspace, ["python", "-c", script])
+    combined = (out + "\n" + err).strip()
+    return code, combined
+
+
+def run_tests(workspace: Path, *, prefer_pytest: bool = True) -> tuple[int, str]:
+    if not prefer_pytest:
+        return verify_sample_greet(workspace)
+    code, output = run_pytest(workspace)
+    if code == 0:
+        return code, output
+    if "no module named pytest" in output.lower():
+        return verify_sample_greet(workspace)
+    return code, output
+
+
 def reset_sample_bug(workspace: Path) -> bool:
     bug = workspace / "sampledemo" / "__init__.demo_bug.py"
     target = workspace / "sampledemo" / "__init__.py"
