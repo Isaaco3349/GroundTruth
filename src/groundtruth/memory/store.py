@@ -3,23 +3,30 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
-from groundtruth.config import ROOT
+from groundtruth.config import runtime_data_dir
 
-MEMORY_PATH = ROOT / "data" / "memory" / "profile.json"
+
+def _memory_path():
+    path = runtime_data_dir() / "memory" / "profile.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def load_profile() -> dict:
-    if not MEMORY_PATH.is_file():
+    path = _memory_path()
+    if not path.is_file():
         return {"notes": [], "recent_run_ids": []}
-    return json.loads(MEMORY_PATH.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def remember_run(run_id: str, task: str) -> None:
-    MEMORY_PATH.parent.mkdir(parents=True, exist_ok=True)
-    profile = load_profile()
-    recent = [run_id] + [r for r in profile.get("recent_run_ids", []) if r != run_id]
-    profile["recent_run_ids"] = recent[:20]
-    profile["last_task"] = task
-    MEMORY_PATH.write_text(json.dumps(profile, indent=2), encoding="utf-8")
+    try:
+        path = _memory_path()
+        profile = load_profile()
+        recent = [run_id] + [r for r in profile.get("recent_run_ids", []) if r != run_id]
+        profile["recent_run_ids"] = recent[:20]
+        profile["last_task"] = task
+        path.write_text(json.dumps(profile, indent=2), encoding="utf-8")
+    except OSError:
+        pass

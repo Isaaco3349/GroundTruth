@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import importlib.util
 import re
 import subprocess
+import sys
 from pathlib import Path
+
+from groundtruth.config import is_vercel
 
 ALLOWED_COMMANDS = frozenset({"python", "pytest", "py"})
 
@@ -57,6 +61,23 @@ def verify_sample_greet(workspace: Path) -> tuple[int, str]:
     expected = infer_expected_from_tests(workspace)
     if not expected:
         return 1, "Could not read expected greet() value from tests."
+
+    if is_vercel():
+        module_path = workspace / "sampledemo" / "__init__.py"
+        if not module_path.is_file():
+            return 1, "sampledemo module missing in workspace."
+        root = str(workspace)
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        spec = importlib.util.spec_from_file_location("sampledemo", module_path)
+        if spec is None or spec.loader is None:
+            return 1, "Could not load sampledemo."
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        actual = mod.greet("builder")
+        if actual != expected:
+            return 1, f"got {actual!r} expected {expected!r}"
+        return 0, "sample verification passed"
 
     script = (
         "import sys\n"

@@ -1,0 +1,23 @@
+{
+  "query": "Context for software task: Fix the failing test in the sample project",
+  "claims": [
+    {
+      "id": "1",
+      "text": "Failing tests should be reproduced, fixed, and re-run until green before merge.",
+      "source_urls": ["https://docs.pytest.org/en/stable/how-to/assert.html"]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://docs.pytest.org/en/stable/how-to/assert.html",
+      "title": "pytest assertions",
+      "citation": "pytest documentation"
+    },
+    {
+      "url": "https://undo.io/resources/what-to-do-about-failing-tests",
+      "title": "What to do about failing tests",
+      "citation": "Undo"
+    }
+  ],
+  "risks": []
+}

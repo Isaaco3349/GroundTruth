@@ -4,38 +4,39 @@
   "status": "completed",
   "model_events": [
     {
-      "t": 1792762322.1500933,
+      "t": 1792768998.2996697,
       "message": "Run started",
       "workspace": "C:\\Users\\user\\groundtruth\\fixtures\\sample_project",
       "nemotron_configured": false
     },
     {
-      "t": 1792762322.1512396,
+      "t": 1792768998.3004816,
       "message": "Reset sample fixture to failing state"
     },
     {
-      "t": 1792762327.5403404,
+      "t": 1792768998.3033779,
       "message": "Tavily evidence loaded",
       "sources": 5,
       "claims": 5,
-      "mode": "search"
+      "mode": "tavily"
     },
     {
-      "t": 1792762327.5558152,
+      "t": 1792768998.3065555,
       "message": "Patch planned",
       "relative_path": "sampledemo/__init__.py",
       "tier": "fallback"
     },
     {
-      "t": 1792762327.5575836,
+      "t": 1792768998.3077211,
       "message": "Patch applied",
       "relative_path": "sampledemo/__init__.py"
     },
     {
-      "t": 1792762328.4317083,
-      "message": "Pytest finished",
+      "t": 1792768999.4736671,
+      "message": "Verification finished",
       "exit_code": 0,
-      "output": ".                                                                        [100%]\n1 passed in 0.03s"
+      "mode": "pytest",
+      "output": ".                                                                        [100%]\n1 passed in 0.02s"
     }
   ],
   "evidence": {
@@ -109,5 +110,5 @@
       "mode": "search"
     }
   },
-  "summary": "Tests passed. Model tier: fallback (Nemotron pending Token Factory). Evidence: 5 sources, 5 claims."
+  "summary": "Tests passed. Model tier: fallback (Nemotron auth failed or not configured; sample path only). Evidence: 5 sources, 5 claims."
 }

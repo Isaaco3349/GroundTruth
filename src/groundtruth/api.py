@@ -47,7 +47,17 @@ def get_run(run_id: str) -> RunRecord:
 @router.post("/runs", response_model=RunRecord)
 def create_run(body: RunRequest) -> RunRecord:
     run_id = str(uuid.uuid4())
-    return run_task(body.task, run_id)
+    try:
+        return run_task(body.task, run_id)
+    except Exception as exc:
+        from groundtruth.models import RunStatus
+
+        return RunRecord(
+            id=run_id,
+            task=body.task,
+            status=RunStatus.failed,
+            summary=f"Server error: {exc}",
+        )
 
 
 app.include_router(router)

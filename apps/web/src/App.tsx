@@ -48,7 +48,18 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ task }),
       });
-      const json = (await res.json()) as RunResult;
+      const raw = await res.text();
+      if (!res.ok) {
+        setLog((prev) => prev + `HTTP ${res.status}: ${raw.slice(0, 500)}\n`);
+        return;
+      }
+      let json: RunResult;
+      try {
+        json = JSON.parse(raw) as RunResult;
+      } catch {
+        setLog((prev) => prev + `Non JSON response: ${raw.slice(0, 500)}\n`);
+        return;
+      }
       setEvidence(json.evidence ?? null);
       const lines =
         json.model_events?.map((ev) => `${ev.message}${ev.tier ? ` (${ev.tier})` : ""}`) ?? [];

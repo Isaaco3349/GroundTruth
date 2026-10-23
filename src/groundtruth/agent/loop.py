@@ -11,7 +11,7 @@ from groundtruth.memory.store import remember_run
 from groundtruth.models import EvidencePack, ModelTier, RunRecord, RunStatus
 from groundtruth.nemotron.client import NemotronClient
 from groundtruth.runs import store as run_store
-from groundtruth.tavily.evidence import fetch_evidence
+from groundtruth.tavily.fetch import load_evidence
 from groundtruth.tools import workspace as ws
 
 
@@ -42,19 +42,19 @@ def run_task(task: str, run_id: str) -> RunRecord:
 
     evidence_query = f"Context for software task: {task}"
     try:
-        use_research = "api" in task.lower() or "library" in task.lower() or "migrate" in task.lower()
-        evidence = fetch_evidence(
-            evidence_query,
-            use_research=use_research,
-            use_cache=True,
-        )
+        evidence = load_evidence(evidence_query, task)
         record.evidence = evidence
+        mode = (
+            "bundled-demo"
+            if (evidence.raw or {}).get("mode") == "demo"
+            else "tavily"
+        )
         _log(
             record,
             "Tavily evidence loaded",
             sources=len(evidence.sources),
             claims=len(evidence.claims),
-            mode="research" if use_research else "search",
+            mode=mode,
         )
     except Exception as exc:
         _log(record, "Tavily failed", error=str(exc))
