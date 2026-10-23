@@ -1,0 +1,157 @@
+@import "../../../assets/brand/colors.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--gt-font);
+  background: var(--gt-gray-100);
+  color: var(--gt-black);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.appShell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  background: var(--gt-lime);
+  color: var(--gt-black);
+  padding: 2rem 1.5rem 2.5rem;
+  border-bottom: 2px solid var(--gt-black);
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hero p {
+  margin: 0;
+  max-width: 42rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr min(22rem, 100%);
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem 2rem;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--gt-white);
+  border: 1px solid var(--gt-border);
+  border-radius: var(--gt-radius-md);
+  box-shadow: var(--gt-shadow);
+  padding: 1.25rem;
+}
+
+.panel h2 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.taskForm textarea {
+  min-height: 7rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gt-black);
+  border-radius: var(--gt-radius-sm);
+  resize: vertical;
+  background: var(--gt-white);
+}
+
+.taskForm textarea:focus {
+  outline: 2px solid var(--gt-lime-muted);
+  outline-offset: 2px;
+}
+
+.btnPrimary {
+  align-self: flex-start;
+  background: var(--gt-navy);
+  color: var(--gt-white);
+  border: none;
+  border-radius: var(--gt-radius-sm);
+  padding: 0.65rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btnPrimary:hover {
+  background: var(--gt-navy-hover);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.log {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  color: var(--gt-ink);
+  min-height: 12rem;
+}
+
+.evidenceEmpty {
+  color: var(--gt-gray-500);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--gt-lime-soft);
+  color: var(--gt-black);
+  border: 1px solid var(--gt-black);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.footer {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--gt-gray-500);
+  border-top: 1px solid var(--gt-border);
+}

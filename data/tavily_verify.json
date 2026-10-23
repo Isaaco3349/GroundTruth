@@ -1,0 +1,51 @@
+{
+  "query": "Tavily Search API",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://docs.langchain.com/oss/javascript/integrations/tools/tavily_search",
+      "title": "Tavily search integration - Docs by LangChain",
+      "content": "Tavily’s Search API is a search engine built specifically for AI agents (LLMs), delivering real-time, accurate, and factual results at speed.\n\n## ​ Overview\n\n### ​ Integration details\n\n| Class | Package | PY support | Downloads | Version |\n ---  --- \n| `TavilySearch` | `@langchain/tavily` | ✅ |\n\n### ​ Tool features\n\n| Returns artifact | Native async | Return data | Pricing |\n ---  --- |\n| ❌ | ✅ | title, URL, content snippet, raw\\_content, answer, images | 1,000 free searches / month | [...] ## ​ API reference\n\nFor detailed documentation of all Tavily Search API features and configurations head to the API reference: docs.tavily.com/documentation/api-reference/endpoint/search \n\nConnect these docs to your agent of choice via MCP for real-time answers.\n\nEdit this page on GitHub or file an issue.\n\nWas this page helpful? [...] ### ​ Credentials\n\nSet up a Tavily API key and set it as an environment variable named `TAVILY_API_KEY`.\n\n```\nprocess.env.TAVILY_API_KEY = \"YOUR_API_KEY\" process. env. TAVILY_API_KEY =  \"YOUR_API_KEY\"\n```\n\nIt’s also helpful (but not needed) to set up LangSmith for best-in-class observability:\n\n```\nprocess.env.LANGSMITH_TRACING=\"true\" process. env. LANGSMITH_TRACING = \"true\"process.env.LANGSMITH_API_KEY=\"your-api-key\" process. env. LANGSMITH_API_KEY =\"your-api-key\"\n```\n\n## ​ Instantiation",
+      "score": 0.9170729,
+      "raw_content": null,
+      "id": "70eca9-00"
+    },
+    {
+      "url": "https://github.com/tavily-ai",
+      "title": "Tavily AI · GitHub",
+      "content": "# Tavily AI\n\nTavily Search API is a search engine optimized for LLMs and RAG, aimed at efficient, quick and persistent search results\n\n 982 followers\n United States of America\n \n company/tavily\n @tavilyai\n support@tavily.com\n\nREADME.md\n\nTavily\n\n## ⭐ Getting Started:\n\nAPI Key   Playground   Documentation\n\n### Python:\n\n```\npip install tavily-python\n``` [...] ## What is Tavily?\n\nThe web access layer for AI applications. Tavily provides fast, reliable APIs that let developers easily:\n\n### 🔍 Search the web\n\nOptimized for relevancy and low latency. Get real-time, contextual information from across the web with intelligent content extraction and ranking that prioritizes the most relevant results for your AI applications.\n\n### 📄 Extract structured data from URLs [...] ```\nfrom tavily import TavilyClient tavily_client = TavilyClient api_key =\"tvly-YOUR_API_KEY\" response = tavily_client search \"Who is Leo Messi?\" print response\n```\n\n### JavaScript / TypeScript:\n\n```\nnpm install @tavily/core\n```\n\n```\nconst{} = require(\"@tavily/core\"); const tvly = tavily({apiKey\"tvly-YOUR_API_KEY\"}); const response = await tvly. search(\"Who is Leo Messi?\"); console. log(response);\n```\n\nFor full API reference & guides: docs .\n\n## What is Tavily?",
+      "score": 0.9159971,
+      "raw_content": null,
+      "id": "8bfe0d-01"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=PDy9qnbD7VA",
+      "title": "Getting Started with the Tavily Search API",
+      "content": "# Getting Started with the Tavily Search API\n## Channel: Tavily\n1.86K subscribers\n93 likes\n\n### Description\n20,573 views\nPosted: 2025-02-26\nGetting Started with the Tavily Search API\n\nThe Tavily Search API is a powerful tool for developers looking to integrate advanced search capabilities into their applications. This guide will walk you through the initial steps of setting up the Tavily Search API in Python, performing basic searches, and utilizing some of its advanced features. [...] [0:34] for that you can head to the T dashboard um if you don't already have an account simply head to t.com uh make an account\n[0:41] and you'll be greeted with this dashboard um here we can see our API keys so you see this one right now is\n[0:48] hidden but if we click on it it's going to copy it to the clipboard and we can paste it in our code so API key equals\n[0:56] and then this API key um writing it in the source code like this is very good for testing but for real projects we [...] ### Transcript\n[0:00] hello welcome to this short introduction to tavil my name is Carl and I'm going to show you how to get started um so the first thing you want to do is install\n[0:08] the python client for T So for that simply write pip install T\n[0:16] python once this is complete uh you can import it in your python file so that's just from T import T\n[0:25] client and then uh let's create an instance of the T client by writing go t client um here you'll need an API key so",
+      "score": 0.8995547,
+      "raw_content": null,
+      "id": "563f47-02"
+    },
+    {
+      "url": "https://shankar-k.medium.com/tavily-introduction-to-agentic-search-tool-8720b9d6aa19",
+      "title": "Tavily — Introduction to Agentic search tool",
+      "content": "_What APIs are available from Tavily?_There are 4 major APIs available from Tavily —   \n_1) Search API_— Returns the results in a clean format with a snippet and answer (generated by LLM) for the search query. The API provides more control on the search by setting boundaries on the search query with various request parameters. The search query is any data that we have to look at the internet to get the results for.\n\n_Request parameters —_\n\nPress enter or click to view image in full size [...] _Why is Tavily easy to use?__1. Simple API —_  \nTraditional search for an AI agent is a multi-stage workflow that looks like the one below —   \n`Traditional Search ⟹ SERP API -> Crawl URL -> Scrape HTML -> Clean Content -> LLM Input`  \nTavily does all the heavy lifting and offers a straightforward API call like the below -   \n`Agentic Search ⟹ Tavily API Call -> LLM-Ready, Clean Context` [...] _1. Maximize the token efficiency and content cleaning_— Every LLM has an upper limit on the information it can process at a time (context window). With the SERP, we get lot of unwanted data as content that some times exceeds the context window. Tavily API provides a clean content by already filtering unwanted HTML, CSS, and many other forms of irrelevant data. The clean content is the actual input needed by the LLM.",
+      "score": 0.885404,
+      "raw_content": null,
+      "id": "a9e896-03"
+    },
+    {
+      "url": "https://docs.crewai.com/edge/en/tools/search-research/tavilysearchtool",
+      "title": "Tavily Search Tool - CrewAI",
+      "content": "The `TavilySearchTool` provides an interface to the Tavily Search API, enabling CrewAI agents to perform comprehensive web searches. It allows for specifying search depth, topics, time ranges, included/excluded domains, and whether to include direct answers, raw content, or images in the results.\n\n## Installation\n\nTo use the `TavilySearchTool`, you need to install the `tavily-python` library:\n\n```\nuv add 'crewai[tools]' tavily-python uv  add 'crewai[tools]' tavily-python\n``` [...] ## ​ Environment Variables\n\nEnsure your Tavily API key is set as an environment variable:\n\n```\nexport TAVILY_API_KEY='your_tavily_api_key' export  TAVILY_API_KEY = 'your_tavily_api_key'\n```\n\nGet an API key at  (sign up, then create a key).\n\n## ​ Example Usage\n\nHere’s how to initialize and use the `TavilySearchTool` within a CrewAI agent:",
+      "score": 0.8377398,
+      "raw_content": null,
+      "id": "0ba3b0-04"
+    }
+  ],
+  "response_time": 0.0,
+  "request_id": "3a74bce4-0489-49bf-a379-6725ad5b7f33",
+  "auth_mode": "keyed"
+}

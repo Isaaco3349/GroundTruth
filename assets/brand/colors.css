@@ -1,0 +1,24 @@
+/**
+ * Nebius inspired palette (marketing site lime hero, black type, navy CTA).
+ * Tune hex values against nebius.com if you need a pixel match.
+ */
+:root {
+  --gt-lime: #c8ff00;
+  --gt-lime-soft: #d9ff66;
+  --gt-lime-muted: #a8e600;
+  --gt-black: #0a0a0a;
+  --gt-ink: #141414;
+  --gt-navy: #0f1a3d;
+  --gt-navy-hover: #162454;
+  --gt-white: #ffffff;
+  --gt-gray-100: #f4f4f0;
+  --gt-gray-500: #6b6b6b;
+  --gt-border: rgba(10, 10, 10, 0.12);
+  --gt-danger: #ff3b30;
+  --gt-success: #0a0a0a;
+
+  --gt-font: "Inter", "Segoe UI", system-ui, sans-serif;
+  --gt-radius-sm: 6px;
+  --gt-radius-md: 10px;
+  --gt-shadow: 0 8px 24px rgba(10, 10, 10, 0.08);
+}
