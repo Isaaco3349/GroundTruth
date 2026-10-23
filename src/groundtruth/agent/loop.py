@@ -6,7 +6,7 @@ import time
 from typing import Any
 
 from groundtruth.agent.planner import plan_patch
-from groundtruth.config import get_settings
+from groundtruth.config import get_settings, prepare_workspace
 from groundtruth.memory.store import remember_run
 from groundtruth.models import EvidencePack, ModelTier, RunRecord, RunStatus
 from groundtruth.nemotron.client import NemotronClient
@@ -26,7 +26,7 @@ def _evidence_ok(pack: EvidencePack) -> bool:
 
 def run_task(task: str, run_id: str) -> RunRecord:
     settings = get_settings()
-    workspace = settings.workspace
+    workspace = prepare_workspace(settings.workspace)
     record = RunRecord(id=run_id, task=task, status=RunStatus.running)
     client = NemotronClient(settings)
 

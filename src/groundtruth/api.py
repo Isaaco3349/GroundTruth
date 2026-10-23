@@ -2,11 +2,9 @@
 
 import uuid
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
-from fastapi import HTTPException
 
 from groundtruth.agent.loop import run_task
 from groundtruth.models import RunRecord
@@ -23,12 +21,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+router = APIRouter(prefix="/api")
+
 
 class RunRequest(BaseModel):
     task: str
 
 
-@app.get("/health")
+@router.get("/health")
 def health() -> dict[str, str | bool]:
     return {
         "status": "ok",
@@ -36,7 +36,7 @@ def health() -> dict[str, str | bool]:
     }
 
 
-@app.get("/runs/{run_id}", response_model=RunRecord)
+@router.get("/runs/{run_id}", response_model=RunRecord)
 def get_run(run_id: str) -> RunRecord:
     record = run_store.load(run_id)
     if record is None:
@@ -44,7 +44,10 @@ def get_run(run_id: str) -> RunRecord:
     return record
 
 
-@app.post("/runs", response_model=RunRecord)
+@router.post("/runs", response_model=RunRecord)
 def create_run(body: RunRequest) -> RunRecord:
     run_id = str(uuid.uuid4())
     return run_task(body.task, run_id)
+
+
+app.include_router(router)

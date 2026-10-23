@@ -1,8 +1,34 @@
+import os
+import shutil
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def is_vercel() -> bool:
+    return bool(os.getenv("VERCEL"))
+
+
+def runtime_data_dir() -> Path:
+    if is_vercel():
+        path = Path("/tmp/groundtruth_data")
+        path.mkdir(parents=True, exist_ok=True)
+        return path
+    return ROOT / "data"
+
+
+def prepare_workspace(workspace: Path) -> Path:
+    """Copy sample fixture to /tmp on Vercel (read only deployment filesystem)."""
+    if not is_vercel():
+        return workspace
+    src = ROOT / "fixtures" / "sample_project"
+    target = Path("/tmp/groundtruth_sample")
+    if target.exists():
+        shutil.rmtree(target)
+    shutil.copytree(src, target)
+    return target
 
 
 class Settings(BaseSettings):
@@ -20,6 +46,8 @@ class Settings(BaseSettings):
     def workspace(self) -> Path:
         if self.groundtruth_workspace:
             return Path(self.groundtruth_workspace).resolve()
+        if is_vercel():
+            return Path("/tmp/groundtruth_sample")
         return (ROOT / "fixtures" / "sample_project").resolve()
 
 

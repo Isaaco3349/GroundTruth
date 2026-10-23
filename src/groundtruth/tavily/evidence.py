@@ -8,11 +8,14 @@ import time
 from pathlib import Path
 from typing import Any
 
-from groundtruth.config import ROOT
+from groundtruth.config import runtime_data_dir
 from groundtruth.models import EvidenceClaim, EvidencePack, SourceCitation
 from groundtruth.tavily.credentials import get_tavily_client
 
-CACHE_DIR = ROOT / "data" / "evidence_cache"
+def cache_dir() -> Path:
+    path = runtime_data_dir() / "evidence_cache"
+    path.mkdir(parents=True, exist_ok=True)
+    return path
 
 EVIDENCE_SCHEMA: dict[str, Any] = {
     "properties": {
@@ -47,9 +50,8 @@ def _client():
 
 
 def _cache_path(query: str, mode: str) -> Path:
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
     digest = hashlib.sha256(f"{mode}:{query}".encode()).hexdigest()[:16]
-    return CACHE_DIR / f"{digest}.json"
+    return cache_dir() / f"{digest}.json"
 
 
 def _load_cache(path: Path) -> EvidencePack | None:

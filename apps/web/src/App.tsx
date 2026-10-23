@@ -1,7 +1,9 @@
 import { FormEvent, useEffect, useState } from "react";
 import "./theme.css";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8787";
+const API_URL =
+  import.meta.env.VITE_API_URL ??
+  (import.meta.env.PROD ? "" : "http://127.0.0.1:8787");
 
 type Source = { url: string; title?: string; citation?: string };
 type Claim = { id: string; text: string; source_urls?: string[] };
@@ -23,7 +25,7 @@ export default function App() {
 
   async function refreshHealth() {
     try {
-      const res = await fetch(`${API_URL}/health`);
+      const res = await fetch(`${API_URL}/api/health`);
       const json = await res.json();
       setNemotronReady(Boolean(json.nemotron_configured));
     } catch {
@@ -41,7 +43,7 @@ export default function App() {
     setEvidence(null);
     setLog((prev) => prev + `\n> ${task}\n`);
     try {
-      const res = await fetch(`${API_URL}/runs`, {
+      const res = await fetch(`${API_URL}/api/runs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ task }),

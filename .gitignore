@@ -21,3 +21,4 @@ data/memory/
 data/evidence_cache/
 .coverage
 htmlcov/
+.vercel/
