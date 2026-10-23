@@ -18,7 +18,7 @@ def test_pack_from_search_minimal():
 
 
 def test_cache_roundtrip(tmp_path, monkeypatch):
-    monkeypatch.setattr(ev, "CACHE_DIR", tmp_path)
+    monkeypatch.setattr(ev, "cache_dir", lambda: tmp_path)
     pack = EvidencePack(query="q", claims=[], sources=[], risks=[])
     path = ev._cache_path("q", "search")
     ev._save_cache(path, pack)

@@ -68,5 +68,15 @@ def plan_patch(
     )
     user = f"Task:\n{task}\n\n{evidence_text}\n{files_block}\n\nReturn the patched file as JSON."
 
-    raw = nemotron.complete(tier, system, user)
-    return _parse_patch_json(raw), tier
+    try:
+        raw = nemotron.complete(tier, system, user)
+        return _parse_patch_json(raw), tier
+    except Exception as exc:
+        err = str(exc).lower()
+        auth_failed = any(
+            token in err
+            for token in ("401", "unauthorized", "authenticate", "invalid api key")
+        )
+        if auth_failed:
+            return fallback_plan(workspace, task, evidence), None
+        raise

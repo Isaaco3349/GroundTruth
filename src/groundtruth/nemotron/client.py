@@ -13,19 +13,26 @@ class NemotronClient:
         self.settings = settings or get_settings()
         self._client: OpenAI | None = None
 
+    def _api_key(self) -> str:
+        key = self.settings.nebius_api_key.strip()
+        if key.lower().startswith("bearer "):
+            key = key[7:].strip()
+        return key
+
     def is_configured(self) -> bool:
-        return bool(self.settings.nebius_api_key.strip())
+        return bool(self._api_key())
 
     def _openai(self) -> OpenAI:
-        if not self.is_configured():
+        key = self._api_key()
+        if not key:
             raise RuntimeError(
                 "NEBIUS_API_KEY is not set. Waiting for Token Factory access. "
                 "Fallback planner will run if enabled."
             )
         if self._client is None:
             self._client = OpenAI(
-                base_url=self.settings.nebius_base_url,
-                api_key=self.settings.nebius_api_key,
+                base_url=self.settings.nebius_base_url.rstrip("/") + "/",
+                api_key=key,
             )
         return self._client
 

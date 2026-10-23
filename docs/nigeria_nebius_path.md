@@ -31,6 +31,10 @@ Keep building Tavily and agent tooling. Nemotron client stays behind `NEBIUS_API
 
 LangChain credits may require a card on file to view balance. LangSmith is optional for this project. Skip unless you already use it for traces.
 
+## Vercel `NEBIUS_API_KEY`
+
+Use only the Token Factory **API key** string from the dashboard. Do not paste `Bearer ` in front. If you see `401 double authenticate`, delete the variable, create a new API key, redeploy, or leave empty until billing works (the app falls back on the sample demo).
+
 ## Tavily
 
 Sign in at the Tavily dashboard with the same email as the redemption mail. Copy a `tvly-` API key into `.env` for demo hosting. Local dev can keep `tvly login` OAuth.

@@ -106,7 +106,10 @@ def run_task(task: str, run_id: str) -> RunRecord:
 
     if code == 0:
         record.status = RunStatus.completed
-        tier_note = tier.value if tier else "fallback (Nemotron pending Token Factory)"
+        if tier:
+            tier_note = tier.value
+        else:
+            tier_note = "fallback (Nemotron auth failed or not configured; sample path only)"
         record.summary = (
             f"Tests passed. Model tier: {tier_note}. "
             f"Evidence: {len(evidence.sources)} sources, {len(evidence.claims)} claims."
