@@ -1,15 +1,24 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "pip install -r requirements.txt && cd apps/web && npm install",
-  "buildCommand": "cd apps/web && npm run build",
-  "outputDirectory": "apps/web/dist",
-  "functions": {
-    "api/index.py": {
-      "maxDuration": 60
+  "services": {
+    "api": {
+      "root": ".",
+      "framework": "fastapi",
+      "installCommand": "pip install -r requirements.txt"
+    },
+    "web": {
+      "root": "apps/web",
+      "framework": "vite"
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": { "service": "api" }
+    },
+    {
+      "source": "/(.*)",
+      "destination": { "service": "web" }
+    }
   ]
 }
